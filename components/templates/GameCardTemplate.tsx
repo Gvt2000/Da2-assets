@@ -44,9 +44,9 @@ export function GameCardTemplate({
 
           <div className="space-y-5">
             <div className={`grid gap-5 ${stacked ? "grid-cols-3" : "grid-cols-3"}`}>
-              <Info icon={Users} label="Jugadores" value={data.players || "2-4"} iconClass={t.icon} />
+              <Info icon={Users} label="Jugadores" value={data.players || "2-4"} iconClass={t.icon} compact={instagram} />
               <Info icon={Clock} label="Duración" value={data.duration || "45 min"} iconClass={t.icon} />
-              <Info icon={Calendar} label="Edad" value={data.age || "10+"} iconClass={t.icon} />
+              <Info icon={Calendar} label="Edad" value={data.age || "10+"} iconClass={t.icon} compact={instagram} />
             </div>
             <Info icon={Sparkles} label="Tipo / categorías" value={data.categories || "Familiar"} iconClass={t.icon} wide />
           </div>
@@ -108,18 +108,20 @@ function Info({
   value,
   iconClass,
   wide = false,
+  compact = false,
 }: {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   value: string;
   iconClass: string;
   wide?: boolean;
+  compact?: boolean;
 }) {
   return (
-    <div className={`${wide ? "min-h-32" : "min-h-40"} rounded-lg border border-white/12 bg-black/28 p-5 shadow-[0_18px_44px_rgba(0,0,0,.24)]`}>
-      <Icon className={`mb-4 size-10 ${iconClass}`} />
-      <p className="text-2xl font-bold uppercase text-zinc-300/90">{label}</p>
-      <AutoFitText as="p" maxSize={wide ? 30 : 26} minSize={16} lines={wide ? 2 : 3} lineHeight={1.2} className="mt-1 break-words font-black">
+    <div className={`${compact ? wide ? "min-h-24" : "min-h-28" : wide ? "min-h-32" : "min-h-40"} rounded-lg border border-white/12 bg-black/28 ${compact ? "p-4" : "p-5"} shadow-[0_18px_44px_rgba(0,0,0,.24)]`}>
+      <Icon className={`${compact ? "mb-2 size-8" : "mb-4 size-10"} ${iconClass}`} />
+      <p className={`${compact ? "text-xl" : "text-2xl"} font-bold uppercase text-zinc-300/90`}>{label}</p>
+      <AutoFitText as="p" maxSize={compact ? wide ? 24 : 22 : wide ? 30 : 26} minSize={14} lines={wide ? 2 : 3} lineHeight={1.16} className="mt-1 break-words font-black">
         {value}
       </AutoFitText>
     </div>
