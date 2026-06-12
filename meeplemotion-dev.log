@@ -38,3 +38,24 @@ Creating turbopack project { dir: 'C:\\Users\\Sheibert\\Downloads\\Da2 assets', 
 ✓ Compiled in 16ms
  GET / 200 in 34ms (next.js: 21ms, application-code: 13ms)
 ✓ Compiled in 15ms
+ GET / 200 in 311ms (next.js: 23ms, application-code: 288ms)
+ GET / 200 in 32ms (next.js: 1833µs, application-code: 30ms)
+ GET / 200 in 26ms (next.js: 1432µs, application-code: 25ms)
+ GET / 200 in 28ms (next.js: 2ms, application-code: 26ms)
+ GET / 200 in 29ms (next.js: 1879µs, application-code: 27ms)
+ GET / 200 in 27ms (next.js: 1579µs, application-code: 25ms)
+ GET / 200 in 365ms (next.js: 46ms, application-code: 320ms)
+✓ Compiled in 77ms
+ GET / 200 in 464ms (next.js: 113ms, application-code: 351ms)
+ GET / 200 in 28ms (next.js: 1760µs, application-code: 27ms)
+ GET / 200 in 27ms (next.js: 1555µs, application-code: 26ms)
+ GET / 200 in 26ms (next.js: 1507µs, application-code: 25ms)
+ GET / 200 in 28ms (next.js: 1356µs, application-code: 26ms)
+ GET / 200 in 29ms (next.js: 1433µs, application-code: 28ms)
+ GET / 200 in 27ms (next.js: 1724µs, application-code: 25ms)
+ GET / 200 in 29ms (next.js: 1558µs, application-code: 28ms)
+ GET / 200 in 29ms (next.js: 1392µs, application-code: 28ms)
+ GET / 200 in 32ms (next.js: 1516µs, application-code: 31ms)
+ GET / 200 in 28ms (next.js: 1568µs, application-code: 27ms)
+ GET / 200 in 27ms (next.js: 1480µs, application-code: 25ms)
+[?25h

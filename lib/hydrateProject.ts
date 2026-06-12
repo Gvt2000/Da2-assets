@@ -28,6 +28,20 @@ export function hydrateProject(project: ProjectState): ProjectState {
         animationMode: project.data.score.animationMode ?? defaultScoreData.animationMode,
         layout: project.data.score.layout ?? defaultScoreData.layout,
       },
+      "pros-cons": {
+        ...project.data["pros-cons"],
+        coverImage: project.data["pros-cons"].coverImage ?? "",
+      },
+      ranking: {
+        ...project.data.ranking,
+        items: project.data.ranking.items.map((item) => ({ ...item, coverImage: item.coverImage ?? "" })),
+      },
+      versus: {
+        ...project.data.versus,
+        coverImageA: project.data.versus.coverImageA ?? "",
+        coverImageB: project.data.versus.coverImageB ?? "",
+        conclusionLabel: project.data.versus.conclusionLabel ?? "Ganador / conclusión",
+      },
     },
   };
 }

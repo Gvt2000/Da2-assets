@@ -2,6 +2,7 @@
 
 import type { FormatType, ResolutionType, ScoreData, ThemeType } from "@/lib/types";
 import { getBaseCanvasSize, getCanvasSize, getResolutionScale } from "@/lib/types";
+import { AutoFitText } from "../AutoFitText";
 import { clampScore, themeClasses } from "./templateStyles";
 
 export function ScoreTemplate({
@@ -20,6 +21,7 @@ export function ScoreTemplate({
   const scale = getResolutionScale(resolution);
   const t = themeClasses(theme);
   const vertical = format === "vertical";
+  const instagram = format === "instagram";
   const lowerThird = data.layout === "lower-third";
   const finalScore = clampScore(data.finalScore);
   const duration = Math.max(0.3, Math.min(8, data.animationDuration || 1.6));
@@ -93,7 +95,7 @@ export function ScoreTemplate({
         {lowerThird ? (
           <LowerThirdScore data={data} criteria={criteria} finalScore={finalScore} theme={t} />
         ) : (
-          <FullScore data={data} criteria={criteria} finalScore={finalScore} theme={t} vertical={vertical} />
+          <FullScore data={data} criteria={criteria} finalScore={finalScore} theme={t} vertical={vertical} instagram={instagram} />
         )}
       </div>
     </div>
@@ -106,38 +108,42 @@ function FullScore({
   finalScore,
   theme,
   vertical,
+  instagram,
 }: {
   data: ScoreData;
   criteria: ScoreData["criteria"];
   finalScore: number;
   theme: ReturnType<typeof themeClasses>;
   vertical: boolean;
+  instagram: boolean;
 }) {
   return (
-    <div className={`relative grid h-full gap-10 p-16 ${vertical ? "grid-rows-[auto_1fr_auto]" : "grid-cols-[1.16fr_.84fr]"}`}>
+    <div className={`relative grid h-full ${instagram ? "gap-6 p-10" : "gap-10 p-16"} ${vertical || instagram ? "grid-rows-[auto_1fr]" : "grid-cols-[1.16fr_.84fr]"}`}>
       <section className="flex min-h-0 flex-col">
         <p className={`mb-5 w-fit rounded-md px-6 py-3 text-3xl font-black uppercase ${theme.accent}`}>Puntuación final</p>
-        <h1 className={`${vertical ? "text-8xl" : "text-[96px]"} max-w-[1040px] text-balance font-black leading-[0.9] drop-shadow-[0_8px_18px_rgba(0,0,0,.35)]`}>
+        <AutoFitText as="h1" maxSize={instagram ? 70 : vertical ? 96 : 96} minSize={34} lines={instagram ? 2 : 3} lineHeight={0.9} className="max-w-[1040px] text-balance font-black drop-shadow-[0_8px_18px_rgba(0,0,0,.35)]">
           {data.gameName || "Nombre del juego"}
-        </h1>
-        <div className="mt-8 flex-1 space-y-4">
+        </AutoFitText>
+        <div className={`${instagram ? "mt-6 space-y-3" : "mt-8 space-y-4"} flex-1`}>
           {criteria.map((criterion, index) => (
             <ScoreBar key={criterion.id} delay={barDelay(data, index)} label={criterion.name} value={clampScore(criterion.value)} fillClass={theme.scoreFill} />
           ))}
         </div>
       </section>
-      <aside className={`relative overflow-hidden rounded-lg border p-8 ${theme.panel}`}>
+      <aside className={`relative overflow-hidden rounded-lg border ${instagram ? "p-6" : "p-8"} ${theme.panel}`}>
         <div className={`absolute inset-x-0 top-0 h-5 ${theme.scoreTopLine}`} />
-        <div className="flex h-full flex-col justify-between pt-8">
+        <div className={`flex h-full ${instagram ? "flex-row items-center gap-8 pt-4" : "flex-col justify-between pt-8"}`}>
           <div>
             <p className={`text-4xl font-black uppercase ${theme.muted}`}>Nota final</p>
-            <div className={`score-pop mt-6 grid aspect-square place-items-center rounded-full border-[14px] bg-black/24 shadow-[inset_0_0_80px_rgba(249,115,22,.16)] ${theme.scoreBorder}`}>
-              <p className="text-[176px] font-black leading-none">{finalScore.toFixed(1)}</p>
+            <div className={`score-pop mt-6 grid aspect-square place-items-center rounded-full ${instagram ? "w-56 border-[10px]" : "border-[14px]"} bg-black/24 shadow-[inset_0_0_80px_rgba(249,115,22,.16)] ${theme.scoreBorder}`}>
+              <p className={`${instagram ? "text-[96px]" : "text-[176px]"} font-black leading-none`}>{finalScore.toFixed(1)}</p>
             </div>
           </div>
-          <div>
+          <div className={instagram ? "min-w-0 flex-1" : ""}>
             <p className={`mb-5 h-3 rounded-full ${theme.line}`} />
-            <p className="score-label text-6xl font-black leading-[0.95] text-pretty">{data.finalLabel || "Etiqueta final"}</p>
+            <AutoFitText as="p" maxSize={instagram ? 44 : 60} minSize={22} lines={instagram ? 2 : 3} lineHeight={0.95} className="score-label font-black text-pretty">
+              {data.finalLabel || "Etiqueta final"}
+            </AutoFitText>
           </div>
         </div>
       </aside>
@@ -162,8 +168,12 @@ function LowerThirdScore({
     <div className="absolute inset-x-12 bottom-10 grid h-[320px] grid-cols-[430px_minmax(0,1fr)_260px] items-center gap-8 rounded-lg border border-white/15 bg-black/62 p-8 shadow-[0_-28px_90px_rgba(0,0,0,.42)] backdrop-blur-sm">
       <div className="min-w-0">
         <p className={`mb-3 w-fit rounded-md px-4 py-2 text-2xl font-black uppercase ${theme.accent}`}>Puntuación</p>
-        <h1 className="line-clamp-2 text-[54px] font-black leading-[0.92]">{data.gameName || "Nombre del juego"}</h1>
-        <p className={`score-label mt-4 line-clamp-2 text-3xl font-black leading-tight ${theme.muted}`}>{data.finalLabel || "Etiqueta final"}</p>
+        <AutoFitText as="h1" maxSize={54} minSize={24} lines={2} lineHeight={0.92} className="font-black">
+          {data.gameName || "Nombre del juego"}
+        </AutoFitText>
+        <AutoFitText as="p" maxSize={30} minSize={16} lines={2} lineHeight={1.2} className={`score-label mt-4 font-black ${theme.muted}`}>
+          {data.finalLabel || "Etiqueta final"}
+        </AutoFitText>
       </div>
       <div className="grid min-w-0 grid-rows-2 gap-4" style={{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }}>
         {criteria.map((criterion, index) => (
@@ -184,7 +194,9 @@ function ScoreBar({ label, value, delay, fillClass }: { label: string; value: nu
   return (
     <div className="rounded-lg border border-white/10 bg-black/20 p-4">
       <div className="mb-3 flex items-end justify-between gap-8">
-        <span className="text-3xl font-black leading-none">{label}</span>
+        <AutoFitText maxSize={30} minSize={16} lines={1} lineHeight={1} className="font-black">
+          {label}
+        </AutoFitText>
         <span className="rounded-md bg-white/12 px-4 py-2 text-4xl font-black leading-none">{value}/10</span>
       </div>
       <div className="h-8 overflow-hidden rounded-full bg-white/12">
@@ -198,7 +210,9 @@ function CompactScoreBar({ label, value, delay, fillClass }: { label: string; va
   return (
     <div className="min-w-0 rounded-md border border-white/10 bg-black/22 p-4">
       <div className="mb-2 flex items-center justify-between gap-3">
-        <span className="truncate text-xl font-black leading-none">{label}</span>
+        <AutoFitText maxSize={20} minSize={12} lines={1} lineHeight={1} className="font-black">
+          {label}
+        </AutoFitText>
         <span className="text-2xl font-black">{value}/10</span>
       </div>
       <div className="h-6 overflow-hidden rounded-full bg-white/12">

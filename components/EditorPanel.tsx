@@ -57,6 +57,7 @@ export function EditorPanel({ project, onChange, onSave, onLoad, onDemo }: Props
       {project.template === "pros-cons" ? (
         <section className="space-y-4">
           <TextInput label="Nombre del juego" value={project.data["pros-cons"].gameName} onChange={(gameName) => updateTemplate("pros-cons", { ...project.data["pros-cons"], gameName })} />
+          <ImageField label="Carátula del juego" value={project.data["pros-cons"].coverImage} onChange={(coverImage) => updateTemplate("pros-cons", { ...project.data["pros-cons"], coverImage })} />
           <ListEditor title="Pros" values={project.data["pros-cons"].pros} onChange={(pros) => updateTemplate("pros-cons", { ...project.data["pros-cons"], pros })} />
           <ListEditor title="Contras" values={project.data["pros-cons"].cons} onChange={(cons) => updateTemplate("pros-cons", { ...project.data["pros-cons"], cons })} />
           <Textarea label="Veredicto corto" value={project.data["pros-cons"].verdict} onChange={(verdict) => updateTemplate("pros-cons", { ...project.data["pros-cons"], verdict })} />
@@ -83,13 +84,6 @@ export function EditorPanel({ project, onChange, onSave, onLoad, onDemo }: Props
 }
 
 function GameCardForm({ data, onChange }: { data: GameCardData; onChange: (data: GameCardData) => void }) {
-  async function handleImage(file: File | null) {
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => onChange({ ...data, coverImage: String(reader.result || "") });
-    reader.readAsDataURL(file);
-  }
-
   return (
     <section className="space-y-4">
       <TextInput label="Nombre del juego" value={data.gameName} onChange={(gameName) => onChange({ ...data, gameName })} />
@@ -105,11 +99,7 @@ function GameCardForm({ data, onChange }: { data: GameCardData; onChange: (data:
       <Range label="Dificultad" value={data.difficulty} max={5} step={0.5} onChange={(difficulty) => onChange({ ...data, difficulty })} />
       <TextInput label="Tipo / categorías" value={data.categories} onChange={(categories) => onChange({ ...data, categories })} />
       <Textarea label="¿Para quién es el juego?" value={data.verdict} onChange={(verdict) => onChange({ ...data, verdict })} />
-      <label className="block">
-        <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-zinc-400">Imagen de portada</span>
-        <input type="file" accept="image/*" onChange={(event) => handleImage(event.target.files?.[0] ?? null)} className="block w-full rounded-lg border border-white/10 bg-black/25 p-3 text-sm text-zinc-300 file:mr-4 file:rounded-md file:border-0 file:bg-teal-300 file:px-3 file:py-2 file:text-sm file:font-bold file:text-zinc-950" />
-      </label>
-      {data.coverImage ? <IconButton icon={X} label="Quitar imagen" onClick={() => onChange({ ...data, coverImage: "" })} /> : null}
+      <ImageField label="Imagen de portada" value={data.coverImage} onChange={(coverImage) => onChange({ ...data, coverImage })} />
     </section>
   );
 }
@@ -181,7 +171,7 @@ function RankingForm({
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <p className="text-sm font-bold text-zinc-200">Juegos del ranking</p>
-          <button type="button" disabled={items.length >= 10} onClick={() => onItems([...items, { position: items.length + 1, name: "", comment: "" }])} className="inline-flex items-center gap-2 rounded-md bg-teal-300 px-3 py-2 text-xs font-bold text-zinc-950 disabled:opacity-40">
+          <button type="button" disabled={items.length >= 10} onClick={() => onItems([...items, { position: items.length + 1, name: "", comment: "", coverImage: "" }])} className="inline-flex items-center gap-2 rounded-md bg-teal-300 px-3 py-2 text-xs font-bold text-zinc-950 disabled:opacity-40">
             <Plus className="size-4" /> Añadir
           </button>
         </div>
@@ -194,7 +184,8 @@ function RankingForm({
                 <X className="size-4" />
               </button>
             </div>
-            <Textarea label="Comentario corto" value={item.comment} onChange={(comment) => onItems(items.map((entry, i) => (i === index ? { ...entry, comment } : entry)))} rows={2} />
+            <ImageField label="Carátula" value={item.coverImage ?? ""} onChange={(coverImage) => onItems(items.map((entry, i) => (i === index ? { ...entry, coverImage } : entry)))} compact />
+            <Textarea label="Comentario corto (opcional)" value={item.comment} onChange={(comment) => onItems(items.map((entry, i) => (i === index ? { ...entry, comment } : entry)))} rows={2} />
           </div>
         ))}
       </div>
@@ -211,6 +202,10 @@ function VersusForm({ project, onChange }: { project: ProjectState; onChange: (d
         <TextInput label="Juego B" value={data.gameB} onChange={(gameB) => onChange({ ...data, gameB })} />
       </div>
       <div className="grid grid-cols-2 gap-3">
+        <ImageField label="Carátula A" value={data.coverImageA ?? ""} onChange={(coverImageA) => onChange({ ...data, coverImageA })} compact />
+        <ImageField label="Carátula B" value={data.coverImageB ?? ""} onChange={(coverImageB) => onChange({ ...data, coverImageB })} compact />
+      </div>
+      <div className="grid grid-cols-2 gap-3">
         <TextInput label="Duración A" value={data.durationA} onChange={(durationA) => onChange({ ...data, durationA })} />
         <TextInput label="Duración B" value={data.durationB} onChange={(durationB) => onChange({ ...data, durationB })} />
       </div>
@@ -220,6 +215,7 @@ function VersusForm({ project, onChange }: { project: ProjectState; onChange: (d
       <Range label="Interacción B" value={data.interactionB} max={10} step={0.5} onChange={(interactionB) => onChange({ ...data, interactionB })} />
       <Textarea label="Mejor para A" value={data.bestForA} onChange={(bestForA) => onChange({ ...data, bestForA })} rows={2} />
       <Textarea label="Mejor para B" value={data.bestForB} onChange={(bestForB) => onChange({ ...data, bestForB })} rows={2} />
+      <TextInput label="Título de conclusión" value={data.conclusionLabel ?? "Ganador / conclusión"} onChange={(conclusionLabel) => onChange({ ...data, conclusionLabel })} />
       <Textarea label="Ganador / conclusión" value={data.winner} onChange={(winner) => onChange({ ...data, winner })} />
     </section>
   );
@@ -242,6 +238,25 @@ function ListEditor({ title, values, onChange }: { title: string; values: string
           </button>
         </div>
       ))}
+    </div>
+  );
+}
+
+function ImageField({ label, value, onChange, compact = false }: { label: string; value: string; onChange: (value: string) => void; compact?: boolean }) {
+  function handleImage(file: File | null) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => onChange(String(reader.result || ""));
+    reader.readAsDataURL(file);
+  }
+
+  return (
+    <div className="space-y-2">
+      <label className="block">
+        <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-zinc-400">{label}</span>
+        <input type="file" accept="image/*" onChange={(event) => handleImage(event.target.files?.[0] ?? null)} className={`block w-full rounded-lg border border-white/10 bg-black/25 text-sm text-zinc-300 file:mr-4 file:rounded-md file:border-0 file:bg-teal-300 file:px-3 file:py-2 file:text-sm file:font-bold file:text-zinc-950 ${compact ? "p-2" : "p-3"}`} />
+      </label>
+      {value ? <IconButton icon={X} label="Quitar imagen" onClick={() => onChange("")} /> : null}
     </div>
   );
 }

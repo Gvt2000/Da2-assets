@@ -34,6 +34,23 @@ select {
   letter-spacing: 0;
 }
 
+.auto-fit-text {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  max-height: calc(var(--auto-fit-size) * (var(--auto-fit-line-height) + 0.18) * var(--auto-fit-lines));
+  margin: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  font-size: var(--auto-fit-size);
+  line-height: var(--auto-fit-line-height);
+}
+
+.auto-fit-text-single {
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
+
 .score-fill {
   transform: scaleX(0);
   transform-origin: left center;

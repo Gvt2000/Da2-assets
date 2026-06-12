@@ -1,6 +1,6 @@
 export type TemplateType = "game-card" | "pros-cons" | "score" | "ranking" | "versus";
 
-export type FormatType = "horizontal" | "vertical";
+export type FormatType = "horizontal" | "vertical" | "instagram";
 
 export type ResolutionType = "hd" | "4k";
 
@@ -25,6 +25,7 @@ export type GameCardData = {
 
 export type ProsConsData = {
   gameName: string;
+  coverImage: string;
   pros: string[];
   cons: string[];
   verdict: string;
@@ -50,6 +51,7 @@ export type RankingItem = {
   position: number;
   name: string;
   comment: string;
+  coverImage?: string;
 };
 
 export type RankingData = {
@@ -60,6 +62,8 @@ export type RankingData = {
 export type VersusData = {
   gameA: string;
   gameB: string;
+  coverImageA?: string;
+  coverImageB?: string;
   durationA: string;
   durationB: string;
   difficultyA: number;
@@ -68,6 +72,7 @@ export type VersusData = {
   interactionB: number;
   bestForA: string;
   bestForB: string;
+  conclusionLabel?: string;
   winner: string;
 };
 
@@ -98,6 +103,7 @@ export const TEMPLATE_LABELS: Record<TemplateType, string> = {
 export const FORMAT_SIZES: Record<FormatType, { width: number; height: number; label: string }> = {
   horizontal: { width: 1920, height: 1080, label: "Horizontal 16:9" },
   vertical: { width: 1080, height: 1920, label: "Vertical 9:16" },
+  instagram: { width: 1080, height: 1350, label: "Instagram 4:5" },
 };
 
 export const RESOLUTION_LABELS: Record<ResolutionType, string> = {

@@ -31,6 +31,7 @@ export const demoData: TemplateDataMap = {
   },
   "pros-cons": {
     gameName: "Bosque de Losetas",
+    coverImage: "",
     pros: ["Turnos rápidos", "Mesa muy bonita", "Escala bien a dos jugadores"],
     cons: ["Azar notable en el robo", "Puede quedarse corto para expertos"],
     verdict: "Un familiar amable que entra por los ojos y sale mucho a mesa.",
