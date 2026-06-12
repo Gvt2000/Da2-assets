@@ -2,6 +2,7 @@
 
 import { ImagePlus, Plus, RotateCcw, Save, Upload, X } from "lucide-react";
 import type {
+  ComingSoonData,
   FormatType,
   GameCardData,
   ProjectState,
@@ -71,6 +72,9 @@ export function EditorPanel({ project, onChange, onSave, onLoad, onDemo }: Props
       ) : null}
       {project.template === "versus" ? (
         <VersusForm project={project} onChange={(data) => updateTemplate("versus", data)} />
+      ) : null}
+      {project.template === "coming-soon" ? (
+        <ComingSoonForm data={active as ComingSoonData} onChange={(data) => updateTemplate("coming-soon", data)} />
       ) : null}
 
       <div className="grid grid-cols-2 gap-3 border-t border-white/10 pt-4">
@@ -217,6 +221,16 @@ function VersusForm({ project, onChange }: { project: ProjectState; onChange: (d
       <Textarea label="Mejor para B" value={data.bestForB} onChange={(bestForB) => onChange({ ...data, bestForB })} rows={2} />
       <TextInput label="Título de conclusión" value={data.conclusionLabel ?? "Ganador / conclusión"} onChange={(conclusionLabel) => onChange({ ...data, conclusionLabel })} />
       <Textarea label="Ganador / conclusión" value={data.winner} onChange={(winner) => onChange({ ...data, winner })} />
+    </section>
+  );
+}
+
+function ComingSoonForm({ data, onChange }: { data: ComingSoonData; onChange: (data: ComingSoonData) => void }) {
+  return (
+    <section className="space-y-4">
+      <TextInput label="Nombre del juego" value={data.gameName} onChange={(gameName) => onChange({ ...data, gameName })} />
+      <TextInput label="Tipo de vídeo" value={data.videoType} onChange={(videoType) => onChange({ ...data, videoType })} />
+      <ImageField label="Imagen del juego" value={data.coverImage} onChange={(coverImage) => onChange({ ...data, coverImage })} />
     </section>
   );
 }

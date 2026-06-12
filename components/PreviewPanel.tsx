@@ -4,6 +4,7 @@ import { forwardRef, useEffect, useRef, useState } from "react";
 import type { ProjectState } from "@/lib/types";
 import { getCanvasSize } from "@/lib/types";
 import { GameCardTemplate } from "./templates/GameCardTemplate";
+import { ComingSoonTemplate } from "./templates/ComingSoonTemplate";
 import { ProsConsTemplate } from "./templates/ProsConsTemplate";
 import { RankingTemplate } from "./templates/RankingTemplate";
 import { ScoreTemplate } from "./templates/ScoreTemplate";
@@ -41,6 +42,7 @@ export const PreviewPanel = forwardRef<HTMLDivElement, { project: ProjectState; 
               {project.template === "score" ? <ScoreTemplate key={animationNonce} data={project.data.score} format={project.format} theme={project.theme} resolution={project.resolution} /> : null}
               {project.template === "ranking" ? <RankingTemplate data={project.data.ranking} format={project.format} theme={project.theme} resolution={project.resolution} /> : null}
               {project.template === "versus" ? <VersusTemplate data={project.data.versus} format={project.format} theme={project.theme} resolution={project.resolution} /> : null}
+              {project.template === "coming-soon" ? <ComingSoonTemplate data={project.data["coming-soon"]} format={project.format} theme={project.theme} resolution={project.resolution} /> : null}
             </div>
           </div>
         </div>

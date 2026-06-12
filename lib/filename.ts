@@ -29,6 +29,9 @@ export function getProjectFileName(project: ProjectState) {
     case "score":
       name = project.data.score.gameName;
       break;
+    case "coming-soon":
+      name = project.data["coming-soon"].gameName;
+      break;
   }
 
   const template = slugify(TEMPLATE_LABELS[project.template]);

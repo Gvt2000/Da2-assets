@@ -1,4 +1,4 @@
-export type TemplateType = "game-card" | "pros-cons" | "score" | "ranking" | "versus";
+export type TemplateType = "game-card" | "pros-cons" | "score" | "ranking" | "versus" | "coming-soon";
 
 export type FormatType = "horizontal" | "vertical" | "instagram";
 
@@ -76,12 +76,19 @@ export type VersusData = {
   winner: string;
 };
 
+export type ComingSoonData = {
+  gameName: string;
+  videoType: string;
+  coverImage: string;
+};
+
 export type TemplateDataMap = {
   "game-card": GameCardData;
   "pros-cons": ProsConsData;
   score: ScoreData;
   ranking: RankingData;
   versus: VersusData;
+  "coming-soon": ComingSoonData;
 };
 
 export type ProjectState = {
@@ -98,6 +105,7 @@ export const TEMPLATE_LABELS: Record<TemplateType, string> = {
   score: "Puntuación final",
   ranking: "Ranking Top",
   versus: "Versus",
+  "coming-soon": "Próximamente",
 };
 
 export const FORMAT_SIZES: Record<FormatType, { width: number; height: number; label: string }> = {

@@ -60,6 +60,11 @@ export const demoData: TemplateDataMap = {
     bestForB: "Familias que priorizan fluidez y mesa bonita",
     winner: "Gana Castillos de Cartón por tener más recorrido.",
   },
+  "coming-soon": {
+    gameName: "Next Station: London",
+    videoType: "Reseña",
+    coverImage: "",
+  },
 };
 
 export function createInitialProject(template: TemplateType = "game-card"): ProjectState {
@@ -77,7 +82,7 @@ export function demoProjectFor(template: TemplateType): ProjectState {
     template,
     format: "horizontal",
     resolution: "hd",
-    theme: template === "ranking" ? "colorful" : "dark",
+    theme: template === "ranking" || template === "coming-soon" ? "colorful" : "dark",
     data: structuredClone(demoData),
   };
 }

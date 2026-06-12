@@ -1,6 +1,6 @@
 "use client";
 
-import { FileBadge, ListChecks, Medal, Swords, Trophy } from "lucide-react";
+import { Clapperboard, FileBadge, ListChecks, Medal, Swords, Trophy } from "lucide-react";
 import { TEMPLATE_LABELS, type TemplateType } from "@/lib/types";
 
 const icons: Record<TemplateType, React.ComponentType<{ className?: string }>> = {
@@ -9,6 +9,7 @@ const icons: Record<TemplateType, React.ComponentType<{ className?: string }>> =
   score: Medal,
   ranking: Trophy,
   versus: Swords,
+  "coming-soon": Clapperboard,
 };
 
 export function TemplateSelector({
@@ -19,7 +20,7 @@ export function TemplateSelector({
   onChange: (template: TemplateType) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-2 lg:grid-cols-5">
+    <div className="grid grid-cols-2 gap-2 lg:grid-cols-6">
       {(Object.keys(TEMPLATE_LABELS) as TemplateType[]).map((template) => {
         const Icon = icons[template];
         const active = value === template;

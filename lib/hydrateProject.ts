@@ -1,4 +1,4 @@
-import { defaultScoreData } from "./demoData";
+import { defaultScoreData, demoData } from "./demoData";
 import type { ProjectState, ScoreCriterion } from "./types";
 
 type LegacyScore = Partial<ProjectState["data"]["score"]> & {
@@ -41,6 +41,10 @@ export function hydrateProject(project: ProjectState): ProjectState {
         coverImageA: project.data.versus.coverImageA ?? "",
         coverImageB: project.data.versus.coverImageB ?? "",
         conclusionLabel: project.data.versus.conclusionLabel ?? "Ganador / conclusión",
+      },
+      "coming-soon": {
+        ...demoData["coming-soon"],
+        ...(project.data["coming-soon"] ?? {}),
       },
     },
   };
