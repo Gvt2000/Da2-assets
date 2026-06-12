@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --background: #111014;
+  --foreground: #f6f3ef;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 14% 9%, rgba(241, 112, 73, 0.16), transparent 32%),
+    radial-gradient(circle at 84% 18%, rgba(68, 177, 157, 0.16), transparent 30%),
+    linear-gradient(135deg, #111014 0%, #17151d 46%, #10151a 100%);
+  color: var(--foreground);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.asset-safe * {
+  letter-spacing: 0;
+}
+
+.score-fill {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: score-fill var(--score-animation-duration, 1.6s) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.score-pop,
+.score-label {
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  animation: score-pop 500ms ease-out forwards;
+  animation-delay: calc(var(--score-animation-duration, 1.6s) + 140ms);
+}
+
+.score-label {
+  animation-delay: calc(var(--score-animation-duration, 1.6s) + 260ms);
+}
+
+.asset-exporting .score-fill,
+.asset-recording .score-fill {
+  animation: none;
+}
+
+.asset-exporting .score-fill {
+  transform: scaleX(1);
+}
+
+.asset-recording .score-fill {
+  transform: scaleX(var(--score-progress, 0));
+}
+
+.asset-exporting .score-pop,
+.asset-exporting .score-label,
+.asset-recording .score-pop,
+.asset-recording .score-label {
+  animation: none;
+  opacity: var(--score-reveal, 1);
+  transform: translateY(calc((1 - var(--score-reveal, 1)) * 18px)) scale(calc(0.98 + (var(--score-reveal, 1) * 0.02)));
+}
+
+@keyframes score-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes score-pop {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.range-thumb::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #f97316;
+  cursor: pointer;
+}

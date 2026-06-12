@@ -1,0 +1,40 @@
+
+> meeplemotion@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.178.62:3001
+✓ Ready in 321ms
+Creating turbopack project { dir: 'C:\\Users\\Sheibert\\Downloads\\Da2 assets', testMode: true }
+
+ GET / 200 in 229ms (next.js: 129ms, application-code: 100ms)
+ GET / 200 in 30ms (next.js: 2ms, application-code: 27ms)
+ GET / 200 in 37ms (next.js: 2ms, application-code: 35ms)
+ GET / 200 in 26ms (next.js: 1540µs, application-code: 25ms)
+✓ Compiled in 18ms
+ GET / 200 in 39ms (next.js: 22ms, application-code: 17ms)
+ GET / 200 in 36ms (next.js: 22ms, application-code: 14ms)
+✓ Compiled in 34ms
+ GET / 200 in 31ms (next.js: 22ms, application-code: 9ms)
+✓ Compiled in 21ms
+✓ Compiled in 26ms
+ GET / 200 in 37ms (next.js: 24ms, application-code: 13ms)
+ GET / 200 in 33ms (next.js: 22ms, application-code: 11ms)
+✓ Compiled in 16ms
+ GET / 200 in 36ms (next.js: 23ms, application-code: 14ms)
+✓ Compiled in 16ms
+✓ Compiled in 43ms
+ GET / 200 in 59ms (next.js: 41ms, application-code: 18ms)
+✓ Compiled in 34ms
+ GET / 200 in 55ms (next.js: 24ms, application-code: 31ms)
+✓ Compiled in 28ms
+ GET / 200 in 47ms (next.js: 29ms, application-code: 17ms)
+ GET / 200 in 41ms (next.js: 28ms, application-code: 12ms)
+✓ Compiled in 15ms
+✓ Compiled in 15ms
+ GET / 200 in 36ms (next.js: 23ms, application-code: 13ms)
+ GET / 200 in 43ms (next.js: 23ms, application-code: 20ms)
+✓ Compiled in 16ms
+ GET / 200 in 34ms (next.js: 21ms, application-code: 13ms)
+✓ Compiled in 15ms
