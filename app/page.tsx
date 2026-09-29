@@ -85,12 +85,11 @@ export default function Home() {
                   targetRef={previewRef}
                   fileName={fileName}
                   duration={project.data.score.animationDuration ?? 1.6}
-                  animationMode={project.data.score.animationMode}
-                  criteriaCount={project.data.score.criteria.length}
+                  transparent={project.data.score.layout === "lower-third"}
                 />
               </>
             ) : null}
-            <ExportButton targetRef={previewRef} fileName={fileName} />
+            <ExportButton targetRef={previewRef} fileName={fileName} transparent={project.template === "score" && project.data.score.layout === "lower-third"} />
           </div>
         </header>
 

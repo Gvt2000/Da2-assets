@@ -74,6 +74,14 @@ export function ScoreTemplate({
             transform: translateY(calc((1 - var(--score-reveal, 1)) * 18px)) scale(calc(0.98 + (var(--score-reveal, 1) * 0.02)));
           }
 
+          .asset-transparent .score-template {
+            background: transparent;
+          }
+
+          .asset-transparent .score-backdrop {
+            display: none;
+          }
+
           @keyframes score-fill {
             from {
               transform: scaleX(0);
@@ -91,7 +99,7 @@ export function ScoreTemplate({
             }
           }
         `}</style>
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(0,0,0,.3),transparent_42%,rgba(0,0,0,.25)),radial-gradient(circle_at_24%_18%,rgba(249,115,22,.30),transparent_30%),radial-gradient(circle_at_84%_80%,rgba(45,212,191,.20),transparent_32%)]" />
+        <div className="score-backdrop absolute inset-0 bg-[linear-gradient(135deg,rgba(0,0,0,.3),transparent_42%,rgba(0,0,0,.25)),radial-gradient(circle_at_24%_18%,rgba(249,115,22,.30),transparent_30%),radial-gradient(circle_at_84%_80%,rgba(45,212,191,.20),transparent_32%)]" />
         {lowerThird ? (
           <LowerThirdScore data={data} criteria={criteria} finalScore={finalScore} theme={t} />
         ) : (

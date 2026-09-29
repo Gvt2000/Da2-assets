@@ -1,1 +1,4 @@
 node_modules
+
+# Copied from node_modules by scripts/copy-ffmpeg-core.mjs
+/public/ffmpeg

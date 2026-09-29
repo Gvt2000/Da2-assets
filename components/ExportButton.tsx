@@ -7,24 +7,27 @@ import type { RefObject } from "react";
 export function ExportButton({
   targetRef,
   fileName,
+  transparent = false,
 }: {
   targetRef: RefObject<HTMLDivElement | null>;
   fileName: string;
+  transparent?: boolean;
 }) {
   async function exportPng() {
     const node = targetRef.current;
     if (!node) return;
 
     node.classList.add("asset-exporting");
+    if (transparent) node.classList.add("asset-transparent");
     let dataUrl: string;
     try {
       dataUrl = await toPng(node, {
         cacheBust: true,
         pixelRatio: 1,
-        backgroundColor: "#111014",
+        backgroundColor: transparent ? undefined : "#111014",
       });
     } finally {
-      node.classList.remove("asset-exporting");
+      node.classList.remove("asset-exporting", "asset-transparent");
     }
 
     const link = document.createElement("a");
